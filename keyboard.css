@@ -42,3 +42,13 @@
 .keyboard_key:active {
     background: rgba(225,225,225,0.15);
 }
+
+.keyboard_key--wide {
+    width: 12%;
+}
+
+
+.keyboard_key--extra-wide {
+    width: 30%;
+    max-width: 500px;
+}
