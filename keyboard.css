@@ -52,3 +52,24 @@
     width: 30%;
     max-width: 500px;
 }
+
+.keyboard_key--activatable::after {
+    content: ' ';
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(0,0,0,.4);
+    border-radius: 50%;
+}
+
+.keyboard_key--active::after {
+    background: #08ff00;
+}
+
+
+.keyboard_key--dark {
+    background: rgba(0,0,0,.4);
+
+}
