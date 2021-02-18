@@ -12,7 +12,7 @@ const Keyboard = {
 
     properties: {
         value: "",
-        capsLock: false;
+        capsLock: false,
     },
 
 
@@ -26,13 +26,15 @@ const Keyboard = {
         this.elements.keysContainer.classList.add("keyboard_keys");
 
 
-        //add elements to DOM
+        //adding the elements to DOM
         this.elements.main.appendChild(this.elements.keysContainer);
         document.body.appendChild(this.elements.main);
 
     },
 
     _createKeys() {
+        const fragment = document.createDocumentFragment();
+        const keyLayout = [];
 
     },
 
