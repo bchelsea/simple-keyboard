@@ -49,9 +49,11 @@ const Keyboard = {
         //create icon html
 
         const createIconHTML = (icon_name) => {
-            return '<i class="material-icons"><$icon_name</i>'
+            return '<i class="material-icons"><${icon_name}</i>'
         };
 
+
+        //Looping through each string in key layer and creating button elements
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
             const insertLineBreak = ["backpspace", "p", "enter", "?"].indexOf(key) !== -1;
@@ -61,6 +63,7 @@ const Keyboard = {
             keyElement.setAttribute("type", "button");
             keyElement.classList.add("keyboard_key");
 
+            //Do special things for special keys
             switch (key) {
                 case "backspace":
                     keyElement.classList.add("keyboard_key--wide");
@@ -73,11 +76,80 @@ const Keyboard = {
                     });
 
                     break;
+
+                case "caps":
+                    keyElement.classList.add("keyboard_key--wide", "keyboard_key--activatable");
+                    keyElement.innerHTML = createIconHTML("keyboard_capsLock");
+    
+                        //adding capslock toggle
+                    keyElement.addEventListener("click", () => {
+                        this._toggleCapsLock
+                    keyElement.classList.toggle("keyboard_key--active", this.properties.capsLock);
+                    });
+    
+                    break;
+
+                case "enter":
+                    keyElement.classList.add("keyboard_key--wide");
+                    keyElement.innerHTML = createIconHTML("keyboard_return");
+        
+                    //adding line break event listener
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += "\n";
+                        this._triggerEvent("oninput");
+                    });
+        
+                    break;
+
+                case "space":
+                    keyElement.classList.add("keyboard_key--extra-wide");
+                    keyElement.innerHTML = createIconHTML("space_bar");
+            
+                    //adding spacebar event listener
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value += " ";
+                        this._triggerEvent("oninput");
+                    });
+            
+                    break;
+
+                case "done":
+                    keyElement.classList.add("keyboard_key--wide", "keyboard_key--dark");
+                    keyElement.innerHTML = createIconHTML("check_circle");
+                
+                    //adding spacebar event listener
+                    keyElement.addEventListener("click", () => {
+                        this.close();
+                        this._triggerEvent("onclose");
+                    });
+                
+                    break;
+
+                //default lowercase keyboard functionality
+                default:
+                    keyElement.textContent = key.toLowerCase();
+                    
+                    //adding spacebar event listener
+                    keyElement.addEventListener("click", () => {
+                        this.properties.value + this.value.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        this._triggerEvent("oninput");
+                    });
+                    
+                    break;            
+
             }
 
+            //fragment is litte container that holds key
+            frangment.appendChild(keyElement);
+
+            if(insertlinebreak) {
+                frangment.appendChild(document.createElement("br"));
+            }
         });
 
-        },
+        return frangment;
+
+    },
 
     triggerEvents(handlerName) {
         console.log("Event Triggered!" + handlerName);
