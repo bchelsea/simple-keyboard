@@ -80,7 +80,11 @@ textarea {
     border: 3px solid #004134;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
-    
+    border-radius: 4px;
+    background: rgba(225,225,225,0.2);
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    resize:none;
 }
 
 h1, h3{
