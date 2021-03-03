@@ -22,7 +22,7 @@ const Keyboard = {
         this.elements.keysContainer = document.createElement("div");
 
         //setup keys 
-        this.elements.main.classList.add("keyboard", "3keyboard-hidden");
+        this.elements.main.classList.add("keyboard", "keyboard-hidden");
         this.elements.keysContainer.classList.add("keyboard_keys");
         this.elements.keysContainer.appendChild(this._createKeys());
 
@@ -32,6 +32,15 @@ const Keyboard = {
         //adding the elements to DOM
         this.elements.main.appendChild(this.elements.keysContainer);
         document.body.appendChild(this.elements.main);
+
+        //automatically use keyboard for elements with .use-keyboard-input
+        document.querySelectorAll("use-keyboard-input").forEach(element => {
+            element.addEventListener("focus", () => {
+                this.open(element.value, currentValue => {
+                    element.value = currentValue;
+                });
+            });
+        });
 
     },
 
@@ -151,7 +160,10 @@ const Keyboard = {
     },
 
     _triggerEvent(handlerName) {
-        console.log("Event Triggered!" + handlerName);
+        if(typeof this.eventHandlers[handlerName] == "function") {
+            this.eventHandlers[handlerName](this.properties.value);
+
+        }
 
     },
 
@@ -159,7 +171,9 @@ const Keyboard = {
         this.properties.capsLock = !this.properties.capsLock;
 
         for(const key of this.elements.keys) {
+            //checking to see if key has an icon 
             if (key.childElementCount === 0) {
+                //if non icon then set uppercase otherwise lowercase
                 key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
             }
         }
@@ -168,10 +182,18 @@ const Keyboard = {
     },
 
     open(initialValue, oninput, onclose) {
+        this.properties.value = initialValue || "";
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.remove("keyboard--hidden");
 
     },
 
     close() {
+        this.properties.value = ""
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.add("keyboard--hidden");
 
     },
   
@@ -180,4 +202,9 @@ const Keyboard = {
 
 window.addEventListener("DOMContentLoaded", function() {
     Keyboard.init();
+    Keyboard.open("dcode", function(currentValue) {
+        console.log("Value Change! it is: " + currentValue);
+    }, function(currentValue) {
+        console.log("Keyboard Closed! Finishing Value: " + currentValue);
+    })
 });
