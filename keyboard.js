@@ -37,13 +37,9 @@ const Keyboard = {
         const fragment = document.createDocumentFragment();
         const keyLayout = [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-
             "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
-
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-
             "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-
             "space"
         ];
 
@@ -57,7 +53,7 @@ const Keyboard = {
         //Looping through each string in key layer and creating button elements
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
-            const insertLineBreak = ["backpspace", "p", "enter", "?"].indexOf(key) !== -1;
+            const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
 
 
             //adding attribbutes and classes
