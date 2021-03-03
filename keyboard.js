@@ -34,7 +34,7 @@ const Keyboard = {
         document.body.appendChild(this.elements.main);
 
         //automatically use keyboard for elements with .use-keyboard-input
-        document.querySelectorAll("use-keyboard-input").forEach(element => {
+        document.querySelectorAll(".use-keyboard-input").forEach(element => {
             element.addEventListener("focus", () => {
                 this.open(element.value, currentValue => {
                     element.value = currentValue;
@@ -202,9 +202,4 @@ const Keyboard = {
 
 window.addEventListener("DOMContentLoaded", function() {
     Keyboard.init();
-    Keyboard.open("dcode", function(currentValue) {
-        console.log("Value Change! it is: " + currentValue);
-    }, function(currentValue) {
-        console.log("Keyboard Closed! Finishing Value: " + currentValue);
-    })
 });
