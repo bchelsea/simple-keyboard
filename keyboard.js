@@ -26,6 +26,8 @@ const Keyboard = {
         this.elements.keysContainer.classList.add("keyboard_keys");
         this.elements.keysContainer.appendChild(this._createKeys());
 
+        this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard_key")
+
 
         //adding the elements to DOM
         this.elements.main.appendChild(this.elements.keysContainer);
@@ -76,11 +78,11 @@ const Keyboard = {
 
                 case "caps":
                     keyElement.classList.add("keyboard_key--wide", "keyboard_key--activatable");
-                    keyElement.innerHTML = createIconHTML("keyboard_capsLock");
+                    keyElement.innerHTML = createIconHTML("keyboard_capslock");
     
                         //adding capslock toggle
                     keyElement.addEventListener("click", () => {
-                        this._toggleCapsLock
+                        this._toggleCapsLock();
                     keyElement.classList.toggle("keyboard_key--active", this.properties.capsLock);
                     });
     
@@ -128,7 +130,7 @@ const Keyboard = {
                     
                     //adding spacebar event listener
                     keyElement.addEventListener("click", () => {
-                        this.properties.value + this.value.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
                         this._triggerEvent("oninput");
                     });
                     
@@ -148,12 +150,20 @@ const Keyboard = {
 
     },
 
-    triggerEvents(handlerName) {
+    _triggerEvent(handlerName) {
         console.log("Event Triggered!" + handlerName);
 
     },
 
-    toggleCapsLock() {
+    _toggleCapsLock() {
+        this.properties.capsLock = !this.properties.capsLock;
+
+        for(const key of this.elements.keys) {
+            if (key.childElementCount === 0) {
+                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        }
+
         console.log("Caps Lock Toggled!");
     },
 
