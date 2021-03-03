@@ -24,6 +24,7 @@ const Keyboard = {
         //setup keys 
         this.elements.main.classList.add("keyboard", "3keyboard-hidden");
         this.elements.keysContainer.classList.add("keyboard_keys");
+        this.elements.keysContainer.appendChild(this._createKeys());
 
 
         //adding the elements to DOM
@@ -49,7 +50,7 @@ const Keyboard = {
         //create icon html
 
         const createIconHTML = (icon_name) => {
-            return '<i class="material-icons"><${icon_name}</i>'
+            return `<i class="material-icons">${icon_name}</i>`;
         };
 
 
@@ -139,15 +140,15 @@ const Keyboard = {
 
             }
 
-            //fragment is litte container that holds key
-            frangment.appendChild(keyElement);
+            //fragment is little container that holds key
+            fragment.appendChild(keyElement);
 
-            if(insertlinebreak) {
-                frangment.appendChild(document.createElement("br"));
+            if(insertLineBreak) {
+                fragment.appendChild(document.createElement("br"));
             }
         });
 
-        return frangment;
+        return fragment;
 
     },
 
